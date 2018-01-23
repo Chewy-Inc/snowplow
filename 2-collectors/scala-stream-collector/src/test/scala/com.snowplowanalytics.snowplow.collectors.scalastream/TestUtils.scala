@@ -23,20 +23,20 @@ object TestUtils {
     interface = "0.0.0.0",
     port = 8080,
     p3p = P3PConfig("/w3c/p3p.xml", "NOI DSP COR NID PSA OUR IND COM NAV STA"),
+    Some(CrossDomainConfig("*", secure = false)),
     cookie = CookieConfig(true, "sp", 365.days, None),
-    cookieBounce = CookieBounceConfig(false, "bounce", "new-nuid"),
-    sink = "stdout",
+    cookieBounce = CookieBounceConfig(false, "bounce", "new-nuid", None),
+    redirectMacro = RedirectMacroConfig(false, None),
     streams = StreamsConfig(
       good = "good",
       bad = "bad",
       useIpAddressAsPartitionKey = false,
-      kinesis = KinesisConfig(
+      sink = Kinesis(
         region = "us-east-1",
         threadPoolSize = 12,
         aws = AWSConfig("cpf", "cpf"),
         backoffPolicy = BackoffPolicyConfig(3000, 60000)
       ),
-      kafka = KafkaConfig("localhost:9092", 1),
       buffer = BufferConfig(4000000, 500, 60000)
     )
   )
